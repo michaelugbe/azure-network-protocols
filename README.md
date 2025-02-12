@@ -2,56 +2,138 @@
 <img src="https://i.imgur.com/Ua7udoS.png" alt="Traffic Examination"/>
 </p>
 
-<h1>Network Security Groups (NSGs) and Inspecting Traffic Between Azure Virtual Machines</h1>
-In this tutorial, we observe various network traffic to and from Azure Virtual Machines with Wireshark as well as experiment with Network Security Groups. <br />
+# Deploying Active Directory in Azure
+Project consists of creating two virtual machines and a networkj where I will be monitoring network traffic with Wireshark. This is all done within Microsoft Azure.
 
+---
 
-<h2>Video Demonstration</h2>
-
-- ### [YouTube: Azure Virtual Machines, Wireshark, and Network Security Groups](https://www.youtube.com)
-
-<h2>Environments and Technologies Used</h2>
-
+## Environments and Technologies Used
 - Microsoft Azure (Virtual Machines/Compute)
 - Remote Desktop
-- Various Command-Line Tools
-- Various Network Protocols (SSH, RDH, DNS, HTTP/S, ICMP)
-- Wireshark (Protocol Analyzer)
+- Wireshark
+- Various Network protocols (ICMP, SSH, DHCP, DNS)
+- Command-line tools
 
-<h2>Operating Systems Used </h2>
+---
 
-- Windows 10 (21H2)
-- Ubuntu Server 20.04
+## Operating Systems Used
+- Windows 10
+- Ubuntu
 
-<h2>High-Level Steps</h2>
+---
 
-- Step 1
-- Step 2
-- Step 3
-- Step 4
+## Lab Steps
 
-<h2>Actions and Observations</h2>
+---
 
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+### Step 1: Create a resource group
+<p align="center">
+<img src="https://i.imgur.com/0nEyM4w.png" height="80%" width="80%"/>
 </p>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-</p>
-<br />
+Navigate to Microsoft Azure and create a resource group.
 
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-</p>
-<br />
+---
 
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+### Step 2: Create first virtual machine
+<p align="center">
+<img src="https://i.imgur.com/3EkV8HG.png" height="80%" width="80%"/>
 </p>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Once my resource group is created, next I'll create the first virtual machine
+
+---
+
+### Step 3: Create client VM
+<p align="center">
+<img src="https://i.imgur.com/jjeTLzp.png" height="80%" width="80%"/>
 </p>
-<br />
+Create client VM.
+
+---
+
+### Step 4: Set domain controller's NIC private IP address to be static
+<p align="center">
+<img src="https://i.imgur.com/94LWEih.png" height="80%" width="80%"/>
+</p>
+Set domain controller's NIC private IP address to be static.
+
+---
+
+### Step 5: Set client-1's DNS settings to DC-1's private IP address
+<p align="center">
+<img src="https://i.imgur.com/Hd4ydiH.png" height="80%" width="80%"/>
+</p>
+Set client-1's DNS settings to DC-1's private IP address.
+
+---
+
+### Step 6: Connect to the dc-1 VM via remote desktop
+<p align="center">
+<img src="https://i.imgur.com/1pO99wk.png" height="80%" width="80%"/>
+</p>
+Connect to the dc-1 VM via remote desktop.
+
+---
+
+### Step 7: Install Active Directory Domain Services
+<p align="center">
+<img src="https://i.imgur.com/nt5FDYo.png" height="80%" width="80%"/>
+</p>
+Install Active Directory Domain Services.
+
+---
+
+### Step 8: Create organizational units called _EMPLOYEES and _ADMINS
+<p align="center">
+<img src="https://i.imgur.com/2WIg6ei.png" height="80%" width="80%"/>
+</p>
+Create organizational units called _EMPLOYEES and _ADMINS.
+
+---
+
+### Step 9: Create a domain admin user within the domain
+<p align="center">
+<img src="https://i.imgur.com/FjQ4FP0.png" height="80%" width="80%"/>
+</p>
+Create a domain admin user within the domain.
+
+---
+
+### Step 10: Log in ro client-1 as the original local admin and join it to the domain, then login to the domain controller and verify that client-1 shows up in the ADUC
+<p align="center">
+<img src="https://i.imgur.com/kIdvoB6.png" height="80%" width="80%"/>
+</p>
+Log in ro client-1 as the original local admin and join it to the domain, then login to the domain controller and verify that client-1 shows up in the ADUC.
+
+---
+
+### Step 11: Log into the domain controller as the previously created amine (jane) and run powershell script to create 10000 users
+<p align="center">
+<img src="https://i.imgur.com/97nvXuz.png" height="80%" width="80%"/>
+</p>
+Log into the domain controller as the previously created amine (jane) and run powershell script to create 10000 users.
+
+---
+
+### Step 12: Configure account lockout threshold in group policy and attempt to login to script created account with the wrong credentials until locked out
+<p align="center">
+<img src="https://i.imgur.com/Clzb28q.png" height="80%" width="80%"/>
+</p>
+Configure account lockout threshold in group policy and attempt to login to script created account with the wrong credentials until locked out.
+
+---
+
+### Step 13: Unlock the account used, reset the password and login using correct credentials
+<p align="center">
+<img src="https://i.imgur.com/IAFDs8m.png" height="80%" width="80%"/>
+</p>
+Unlock the account used, reset the password and login using correct credentials.
+
+---
+
+### Step 14: Observe the logs on the Domain Controller
+<p align="center">
+<img src="https://i.imgur.com/8AiyZs0.png" height="80%" width="80%"/>
+</p>
+Observe the logs on the Domain Controller.
+
+---
